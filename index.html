@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SE Tools — Software Engineering Course Tools</title>
+    <meta name="description" content="A collection of interactive tools built for university CS courses. Numerical computing, data communication & computer networks, and operating systems — all with step-by-step solutions.">
+    <meta name="keywords" content="SE tools, software engineering, university tools, numerical computing, computer networks, operating systems, CS courses, student tools, interactive calculators, step-by-step solutions">
+    <meta name="author" content="Arose Niazi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://se-tools.arose-niazi.me/">
+
+    <meta property="og:title" content="SE Tools — Software Engineering Course Tools">
+    <meta property="og:description" content="A collection of interactive tools built for university CS courses — numerical computing, networking, and OS tools.">
+    <meta property="og:url" content="https://se-tools.arose-niazi.me/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SE Tools">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SE Tools — Software Engineering Course Tools">
+    <meta name="twitter:description" content="A collection of interactive tools built for university CS courses.">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "SE Tools",
+        "url": "https://se-tools.arose-niazi.me/",
+        "description": "A collection of interactive tools built for university CS courses",
+        "author": { "@type": "Person", "name": "Arose Niazi", "url": "https://arose-niazi.me" }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #f8fafc; --bg-card: #ffffff; --text: #1e293b; --text-muted: #64748b;
+            --border: #e2e8f0; --primary: #6366f1; --primary-hover: #4f46e5;
+            --header-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1); --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1);
+            --radius: 16px; --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a; --bg-card: #1e293b; --text: #e2e8f0; --text-muted: #94a3b8;
+            --border: #334155; --shadow: 0 1px 3px rgba(0,0,0,0.3); --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.4);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s; }
+
+        header { background: var(--header-bg); color: white; padding: 3rem 1rem; text-align: center; position: relative; }
+        header h1 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .theme-toggle { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 1.3rem; cursor: pointer; transition: background 0.2s; }
+        .theme-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        main { max-width: 960px; margin: -2rem auto 2rem; padding: 0 1rem; position: relative; z-index: 1; }
+
+        .suite-section { margin-bottom: 2.5rem; }
+        .suite-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+        .suite-section h2 .tool-count { color: var(--text-muted); font-weight: 400; font-size: 0.9rem; margin-left: 0.5rem; }
+
+        .suite-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 2rem; box-shadow: var(--shadow); transition: all 0.3s; text-decoration: none; color: var(--text);
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+        }
+        .suite-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+        .suite-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: var(--primary); transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+        }
+        .suite-card:hover::before { transform: scaleX(1); }
+
+        .suite-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .suite-card h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .suite-card .suite-subtitle { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .suite-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1; }
+        .tool-list { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tool-tag {
+            background: #eef2ff; color: var(--primary); padding: 0.2rem 0.6rem; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 600;
+        }
+        [data-theme="dark"] .tool-tag { background: #1e1b4b; }
+        .suite-arrow { margin-top: 1rem; color: var(--primary); font-weight: 700; font-size: 0.95rem; }
+
+        .suites-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+        footer { text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 3rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        footer p + p { margin-top: 0.3rem; }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.6rem; }
+            header { padding: 2rem 1rem; }
+            .suites-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎓 SE Tools</h1>
+        <p>A collection of interactive tools built for university CS courses</p>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <main>
+        <div class="suites-grid">
+            <a href="https://nc.arose-niazi.me/" class="suite-card">
+                <div class="suite-icon">📐</div>
+                <h3>NC Suite</h3>
+                <div class="suite-subtitle">Numerical Computing — 7 tools</div>
+                <p>Step-by-step calculators for numerical methods including LU decomposition, root finding, ODE solving, interpolation, integration, and differentiation.</p>
+                <div class="tool-list">
+                    <span class="tool-tag">LU Decomposition</span>
+                    <span class="tool-tag">Root Finding</span>
+                    <span class="tool-tag">ODE Solvers</span>
+                    <span class="tool-tag">Iterative Methods</span>
+                    <span class="tool-tag">Interpolation</span>
+                    <span class="tool-tag">Integration</span>
+                    <span class="tool-tag">Differentiation</span>
+                </div>
+                <div class="suite-arrow">Open NC Suite →</div>
+            </a>
+
+            <a href="https://dccn.arose-niazi.me/" class="suite-card">
+                <div class="suite-icon">🌐</div>
+                <h3>DCCN Suite</h3>
+                <div class="suite-subtitle">Data Communication &amp; Computer Networks — 2 tools</div>
+                <p>Interactive tools for network error detection and IP subnetting with step-by-step solutions and visual breakdowns.</p>
+                <div class="tool-list">
+                    <span class="tool-tag">Network Error Detection</span>
+                    <span class="tool-tag">IP Subnet Calculator</span>
+                </div>
+                <div class="suite-arrow">Open DCCN Suite →</div>
+            </a>
+
+            <a href="https://os.arose-niazi.me/" class="suite-card">
+                <div class="suite-icon">⚙️</div>
+                <h3>OS Suite</h3>
+                <div class="suite-subtitle">Operating Systems — 1 tool</div>
+                <p>CPU scheduling algorithm simulator with multi-core support, Gantt chart visualization, and side-by-side algorithm comparison.</p>
+                <div class="tool-list">
+                    <span class="tool-tag">CPU Scheduling</span>
+                </div>
+                <div class="suite-arrow">Open OS Suite →</div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Built by <a href="https://arose-niazi.me" target="_blank" rel="noopener">Arose Niazi</a></p>
+        <p><a href="https://github.com/Arose-Niazi" target="_blank" rel="noopener">GitHub</a> · SE Tools</p>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('se-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('se-theme', next);
+            btn.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
+    </script>
+</body>
+</html>

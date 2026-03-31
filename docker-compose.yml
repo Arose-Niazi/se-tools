@@ -1,0 +1,15 @@
+name: se-tools
+
+services:
+  web:
+    build: .
+    container_name: se-tools-web
+    restart: unless-stopped
+    networks:
+      - proxy
+    expose:
+      - "80"
+
+networks:
+  proxy:
+    external: true
